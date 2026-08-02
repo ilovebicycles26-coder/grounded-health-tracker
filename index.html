@@ -13,8 +13,26 @@
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icon.svg">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="auth.css">
 </head>
 <body>
+  <div class="auth-gate" id="authGate">
+    <div class="auth-panel">
+      <div class="auth-brand"><span class="brand-mark">g.</span><span>grounded</span></div>
+      <div id="loginPanel">
+        <p class="eyebrow muted">PRIVATE HEALTH SPACE</p><h2>Welcome back.</h2><p class="auth-copy">Sign in to your private shared tracker.</p>
+        <form id="authForm"><label>Email<input name="email" type="email" autocomplete="email" required></label><label>Password<input name="password" type="password" autocomplete="current-password" minlength="8" required></label><button class="primary full" type="submit">Sign in</button></form>
+        <button class="auth-switch" id="authSwitch">New here? Create an account</button><p class="auth-status" id="authStatus"></p>
+      </div>
+      <div id="householdPanel" hidden>
+        <p class="eyebrow muted">ONE LAST STEP</p><h2>Your shared space.</h2><p class="auth-copy">Create your private space, or join one using Zoe’s invite code.</p>
+        <form id="createHousehold"><label>Shared space name<input name="name" value="Richard &amp; Zoe" required></label><button class="primary full" type="submit">Create private space</button></form>
+        <div class="or"><span>or</span></div>
+        <form id="joinHousehold"><label>Invite code<input name="code" maxlength="8" placeholder="8-character code" required></label><button class="secondary full" type="submit">Join shared space</button></form>
+        <p class="auth-status" id="householdStatus"></p><button class="auth-switch" id="setupSignOut">Sign out</button>
+      </div>
+    </div>
+  </div>
   <div class="app-shell">
     <aside class="sidebar">
       <a class="brand" href="#overview" aria-label="Grounded home"><span class="brand-mark">g.</span><span>grounded</span></a>
@@ -25,6 +43,7 @@
         <button class="nav-item" data-view="habits"><span>✓</span>Habits</button>
       </nav>
       <div class="sidebar-bottom">
+        <button class="nav-item" id="signOut"><span>↪</span>Sign out</button>
         <button class="nav-item" data-view="settings"><span>⚙</span>Settings</button>
         <div class="privacy-note"><span>●</span><div><strong>Private by default</strong><small>Your data stays on this device.</small></div></div>
       </div>
@@ -81,7 +100,8 @@
       <section class="view" id="settingsView">
         <div class="section-intro"><div><p class="eyebrow muted">MAKE IT YOURS</p><h2>Your health,<br><em>your terms.</em></h2></div></div>
         <form class="card settings-form" id="settingsForm"><h3>Profile & goal</h3><div class="field-grid"><label>Your name<input name="name" placeholder="Your name"></label><label>Goal weight (kg)<input name="goal" type="number" min="30" max="300" step="0.1" value="90"></label><label>Starting weight (kg)<input name="start" type="number" min="30" max="400" step="0.1" placeholder="e.g. 112"></label><label>Height (cm)<input name="height" type="number" min="100" max="250" placeholder="Optional"></label></div><button class="primary" type="submit">Save changes</button></form>
-        <div class="card data-card"><div><h3>Your data</h3><p>Download a complete backup or restore one on this device.</p></div><div class="data-actions"><button class="secondary" id="backupData">Download backup</button><label class="secondary file-label">Restore backup<input id="restoreData" type="file" accept="application/json"></label><button class="danger" id="clearData">Clear all data</button></div></div>
+        <div class="card data-card"><div><h3>Shared access</h3><p>Give this private code only to Zoe. She’ll enter it after creating her account.</p><strong class="invite-code" id="inviteCode">—</strong></div><button class="secondary" id="copyInvite">Copy invite code</button></div>
+        <div class="card data-card"><div><h3>Your data</h3><p>Your secure connection syncs changes to your private shared space.</p></div><div class="data-actions"><button class="secondary" id="backupData">Download backup</button><label class="secondary file-label">Restore backup<input id="restoreData" type="file" accept="application/json"></label><button class="danger" id="clearData">Clear all data</button></div></div>
       </section>
     </main>
   </div>
@@ -89,6 +109,7 @@
   <dialog id="weightDialog"><form method="dialog" id="weightForm"><div class="modal-head"><div><p class="eyebrow muted">CHECK IN</p><h3>Log your weight</h3></div><button value="cancel" aria-label="Close">×</button></div><label>Weight (kg)<div class="weight-input"><input name="weight" type="number" min="30" max="400" step="0.1" required autofocus><span>kg</span></div></label><label>Date<input name="date" type="date" required></label><label>Note <span>Optional</span><textarea name="note" rows="3" placeholder="How did this week feel?"></textarea></label><button class="primary full" value="default">Save weigh-in</button></form></dialog>
   <dialog id="habitDialog"><form method="dialog" id="habitForm"><div class="modal-head"><h3>Add a habit</h3><button value="cancel" aria-label="Close">×</button></div><label>Habit name<input name="name" maxlength="32" required placeholder="e.g. Morning walk"></label><label>Icon<select name="icon"><option>💧</option><option>🚶</option><option>🥗</option><option>😴</option><option>🧘</option><option>🏋️</option></select></label><button class="primary full" value="default">Add habit</button></form></dialog>
   <div class="toast" id="toast" role="status"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="app.js"></script>
 </body>
 </html>

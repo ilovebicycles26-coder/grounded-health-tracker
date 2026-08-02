@@ -1,9 +1,13 @@
 const KEY='grounded-health-v1';
 const today=()=>new Date().toISOString().slice(0,10);
 const defaults={profile:{name:'',goal:90,start:null,height:null},weights:[],checkins:[],habits:[{id:'water',name:'Drink 2L water',icon:'💧'},{id:'walk',name:'30 minute walk',icon:'🚶'},{id:'veg',name:'Vegetables with meals',icon:'🥗'},{id:'sleep',name:'7+ hours sleep',icon:'😴'}],habitLogs:{}};
-let state=load();let chartRange=90;
+let state=structuredClone(defaults);let chartRange=90;let household=null;let cloudReady=false;let syncTimer;
+const SB_URL='https://qlgsgzetxhhcrxbazuvm.supabase.co';
+const SB_KEY='sb_publishable_Pl5qvShBpMOsMsyxQr70lw_pxe69SmY';
+const sb=window.supabase.createClient(SB_URL,SB_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
 function load(){try{return {...structuredClone(defaults),...JSON.parse(localStorage.getItem(KEY)||'{}')}}catch{return structuredClone(defaults)}}
-function save(){localStorage.setItem(KEY,JSON.stringify(state));renderAll()}
+function save(){localStorage.setItem(KEY,JSON.stringify(state));renderAll();if(cloudReady&&household){clearTimeout(syncTimer);syncTimer=setTimeout(syncCloud,450)}}
+async function syncCloud(){const {error}=await sb.from('health_states').upsert({household_id:household.household_id,data:state,updated_at:new Date().toISOString(),updated_by:(await sb.auth.getUser()).data.user.id});if(error)toast('Cloud sync paused');else toast('Saved privately')}
 const $=(s,p=document)=>p.querySelector(s);const $$=(s,p=document)=>[...p.querySelectorAll(s)];
 function fmtDate(d){return new Date(d+'T12:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}
 function toast(msg){const el=$('#toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2200)}
@@ -29,4 +33,34 @@ window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();ins
 $('#installApp').addEventListener('click',async()=>{if(!installPrompt)return;installPrompt.prompt();await installPrompt.userChoice;installPrompt=null;$('#installApp').hidden=true});
 window.addEventListener('appinstalled',()=>toast('Grounded is installed'));
 if('serviceWorker' in navigator&&location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js'));
-init();
+
+let signupMode=false;
+async function openPrivateSpace(){
+  const {data,error}=await sb.rpc('my_household');
+  if(error){$('#authStatus').textContent=error.message;return}
+  household=data?.[0];
+  if(!household){$('#loginPanel').hidden=true;$('#householdPanel').hidden=false;$('#authGate').hidden=false;return}
+  const {data:row,error:loadError}=await sb.from('health_states').select('data').eq('household_id',household.household_id).single();
+  if(loadError){$('#householdStatus').textContent=loadError.message;return}
+  const local=load();
+  const cloudHasData=row?.data&&Object.keys(row.data).length>0;
+  state=cloudHasData?{...structuredClone(defaults),...row.data}:local;
+  cloudReady=true;
+  $('#inviteCode').textContent=household.invite_code;
+  $('#authGate').hidden=true;
+  renderAll();
+  if(!cloudHasData)await syncCloud();
+}
+async function boot(){
+  init();
+  $('#authSwitch').onclick=()=>{signupMode=!signupMode;$('#authForm button').textContent=signupMode?'Create account':'Sign in';$('#authSwitch').textContent=signupMode?'Already have an account? Sign in':'New here? Create an account';$('#authStatus').textContent=''};
+  $('#authForm').onsubmit=async e=>{e.preventDefault();const fd=new FormData(e.target),email=fd.get('email'),password=fd.get('password');$('#authStatus').textContent=signupMode?'Creating your account…':'Signing in…';if(signupMode){const {data,error}=await sb.auth.signUp({email,password,options:{emailRedirectTo:location.origin+location.pathname}});if(error){$('#authStatus').textContent=error.message;return}if(!data.session){$('#authStatus').textContent='Check your email to confirm your account, then return here to sign in.';return}}else{const {error}=await sb.auth.signInWithPassword({email,password});if(error){$('#authStatus').textContent=error.message;return}}await openPrivateSpace()};
+  $('#createHousehold').onsubmit=async e=>{e.preventDefault();$('#householdStatus').textContent='Creating your private space…';const {error}=await sb.rpc('create_household',{household_name:new FormData(e.target).get('name')});if(error){$('#householdStatus').textContent=error.message;return}await openPrivateSpace()};
+  $('#joinHousehold').onsubmit=async e=>{e.preventDefault();$('#householdStatus').textContent='Joining private space…';const {error}=await sb.rpc('join_household',{code:new FormData(e.target).get('code')});if(error){$('#householdStatus').textContent=error.message;return}await openPrivateSpace()};
+  const signOut=async()=>{cloudReady=false;household=null;await sb.auth.signOut();location.reload()};
+  $('#signOut').onclick=signOut;$('#setupSignOut').onclick=signOut;
+  $('#copyInvite').onclick=async()=>{await navigator.clipboard.writeText(household.invite_code);toast('Invite code copied')};
+  const {data:{session}}=await sb.auth.getSession();
+  if(session)await openPrivateSpace();else $('#authGate').hidden=false;
+}
+boot();

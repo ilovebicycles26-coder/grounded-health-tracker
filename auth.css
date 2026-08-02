@@ -1,0 +1,12 @@
+.auth-gate{position:fixed;inset:0;z-index:100;background:linear-gradient(135deg,#12352f 0 45%,#dcebdd 45% 100%);display:grid;place-items:center;padding:20px}
+.auth-gate[hidden]{display:none}
+.auth-panel{width:min(430px,100%);background:var(--paper);padding:38px;border-radius:22px;box-shadow:0 30px 90px rgba(0,0,0,.28)}
+.auth-brand{display:flex;align-items:center;gap:10px;font:22px Georgia,serif;margin-bottom:42px}
+.auth-panel h2{font:38px Georgia,serif;margin:12px 0}
+.auth-copy{color:var(--muted);font-size:13px;margin-bottom:25px}
+.auth-panel form{display:grid;gap:16px}.auth-panel label{display:grid;gap:7px;font-size:12px;font-weight:700}
+.auth-switch{display:block;margin:18px auto 0;border:0;background:none;color:var(--mint-dark);font-weight:700;cursor:pointer}
+.auth-status{min-height:18px;text-align:center;color:var(--red);font-size:12px}
+.or{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:11px;margin:22px 0}.or:before,.or:after{content:"";height:1px;background:var(--line);flex:1}
+.invite-code{display:inline-block;font:24px Georgia,serif;letter-spacing:.14em;margin-top:12px;color:var(--mint-dark)}
+@media(max-width:520px){.auth-panel{padding:28px 22px}.auth-panel h2{font-size:32px}}
