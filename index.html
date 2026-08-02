@@ -14,6 +14,8 @@
   <link rel="apple-touch-icon" href="icon.svg">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="auth.css">
+  <link rel="stylesheet" href="routines.css">
+  <link rel="stylesheet" href="routine-builder.css">
 </head>
 <body>
   <div class="auth-gate" id="authGate">
@@ -41,6 +43,7 @@
         <button class="nav-item" data-view="progress"><span>↗</span>Progress</button>
         <button class="nav-item" data-view="checkin"><span>＋</span>Check-in</button>
         <button class="nav-item" data-view="habits"><span>✓</span>Habits</button>
+        <button class="nav-item" data-view="routines"><span>⚡</span>Routines</button>
       </nav>
       <div class="sidebar-bottom">
         <button class="nav-item" id="signOut"><span>↪</span>Sign out</button>
@@ -53,7 +56,7 @@
       <header class="topbar">
         <button class="mobile-menu" aria-label="Open menu">☰</button>
         <div><p class="eyebrow" id="todayLabel"></p><h1 id="pageTitle">Overview</h1></div>
-        <div style="display:flex;gap:8px"><button class="secondary" id="installApp" hidden>Install app</button><button class="primary" id="quickLog">＋ Log weight</button></div>
+        <div style="display:flex;gap:8px"><button class="secondary" id="installApp">Install app</button><button class="primary" id="quickLog">＋ Log weight</button></div>
       </header>
 
       <section class="view active" id="overviewView">
@@ -97,6 +100,18 @@
         <div class="habit-layout"><div class="card"><div class="week-head" id="weekHead"></div><div id="habitTracker"></div></div><aside class="card insight"><p class="eyebrow muted">THIS WEEK</p><strong id="weekPercent">0%</strong><p>of your habits completed</p><div class="mini-bar"><i id="weekBar"></i></div><small>Consistency beats perfection. Keep the promises that help you feel your best.</small></aside></div>
       </section>
 
+      <section class="view" id="routinesView">
+        <div class="section-intro"><div><p class="eyebrow muted">MOVE FOR LIFE</p><h2>Home movement,<br><em>built to last.</em></h2><p>Choose what suits your energy and knees today. There is no deadline and every session counts.</p></div></div>
+        <div class="routine-summary">
+          <article class="card routine-stat"><small>THIS WEEK</small><strong id="workoutsThisWeek">0</strong><span>sessions completed</span></article>
+          <article class="card routine-stat"><small>CYCLING</small><strong id="cyclingMinutes">0</strong><span>minutes this week</span></article>
+          <article class="card routine-stat"><small>LAST SESSION</small><strong id="lastWorkout">—</strong><span id="lastWorkoutDate">Start when you are ready</span></article>
+        </div>
+        <div class="routine-layout"><div class="routine-picker" id="routinePicker"></div><article class="card routine-detail" id="routineDetail"></article></div>
+        <form class="card routine-builder" id="routineBuilder"><div><p class="eyebrow muted">PERSONAL ROUTINE BUILDER</p><h3>Create a routine for Zoe</h3><p>Pick enjoyable activities and Grounded will turn them into a simple repeatable session.</p></div><div class="builder-fields"><label>Who is it for?<input name="owner" value="Zoe" required></label><label>Routine name<input name="name" value="Zoe's feel-good movement" required></label></div><fieldset><legend>Activities she enjoys</legend><label><input type="checkbox" name="activity" value="Hula hooping" checked> Hula hooping</label><label><input type="checkbox" name="activity" value="Walking"> Walking</label><label><input type="checkbox" name="activity" value="Dancing"> Dancing</label><label><input type="checkbox" name="activity" value="Bodyweight strength"> Bodyweight strength</label><label><input type="checkbox" name="activity" value="Resistance-band mobility"> Resistance-band mobility</label></fieldset><label>Another activity<input name="other" placeholder="e.g. gardening, yoga or swimming"></label><button class="primary" type="submit">Create personal routine</button></form>
+        <div class="card routine-safety"><strong>Listen to your body</strong><p>Keep movements comfortable and controlled. Reduce the range or stop if pain becomes sharp or clearly worsens. Build time gradually, especially after a flare-up.</p></div>
+      </section>
+
       <section class="view" id="settingsView">
         <div class="section-intro"><div><p class="eyebrow muted">MAKE IT YOURS</p><h2>Your health,<br><em>your terms.</em></h2></div></div>
         <form class="card settings-form" id="settingsForm"><h3>Profile & goal</h3><div class="field-grid"><label>Your name<input name="name" placeholder="Your name"></label><label>Goal weight (kg)<input name="goal" type="number" min="30" max="300" step="0.1" value="90"></label><label>Starting weight (kg)<input name="start" type="number" min="30" max="400" step="0.1" placeholder="e.g. 112"></label><label>Height (cm)<input name="height" type="number" min="100" max="250" placeholder="Optional"></label></div><button class="primary" type="submit">Save changes</button></form>
@@ -106,8 +121,9 @@
     </main>
   </div>
 
-  <dialog id="weightDialog"><form method="dialog" id="weightForm"><div class="modal-head"><div><p class="eyebrow muted">CHECK IN</p><h3>Log your weight</h3></div><button value="cancel" aria-label="Close">×</button></div><label>Weight (kg)<div class="weight-input"><input name="weight" type="number" min="30" max="400" step="0.1" required autofocus><span>kg</span></div></label><label>Date<input name="date" type="date" required></label><label>Note <span>Optional</span><textarea name="note" rows="3" placeholder="How did this week feel?"></textarea></label><button class="primary full" value="default">Save weigh-in</button></form></dialog>
-  <dialog id="habitDialog"><form method="dialog" id="habitForm"><div class="modal-head"><h3>Add a habit</h3><button value="cancel" aria-label="Close">×</button></div><label>Habit name<input name="name" maxlength="32" required placeholder="e.g. Morning walk"></label><label>Icon<select name="icon"><option>💧</option><option>🚶</option><option>🥗</option><option>😴</option><option>🧘</option><option>🏋️</option></select></label><button class="primary full" value="default">Add habit</button></form></dialog>
+  <dialog id="weightDialog"><form method="dialog" id="weightForm"><div class="modal-head"><div><p class="eyebrow muted">CHECK IN</p><h3>Log your weight</h3></div><button type="button" data-close-dialog="weightDialog" aria-label="Close">×</button></div><label>Weight (kg)<div class="weight-input"><input name="weight" type="number" min="30" max="400" step="0.1" required autofocus><span>kg</span></div></label><label>Date<input name="date" type="date" required></label><label>Note <span>Optional</span><textarea name="note" rows="3" placeholder="How did this week feel?"></textarea></label><button class="primary full" value="default">Save weigh-in</button></form></dialog>
+  <dialog id="habitDialog"><form method="dialog" id="habitForm"><div class="modal-head"><h3>Add a habit</h3><button type="button" data-close-dialog="habitDialog" aria-label="Close">×</button></div><label>Habit name<input name="name" maxlength="32" required placeholder="e.g. Morning walk"></label><label>Icon<select name="icon"><option>💧</option><option>🚶</option><option>🥗</option><option>😴</option><option>🧘</option><option>🏋️</option></select></label><button class="primary full" value="default">Add habit</button></form></dialog>
+  <dialog id="installDialog"><div class="install-guide"><div class="modal-head"><div><p class="eyebrow muted">PHONE APP</p><h3>Install Grounded</h3></div><button type="button" data-close-dialog="installDialog" aria-label="Close">×</button></div><div id="iosInstall"><strong>On Zoe's iPhone</strong><ol><li>Open this page in Safari.</li><li>Tap the Share button at the bottom of Safari.</li><li>Scroll down and tap <b>Add to Home Screen</b>.</li><li>Tap <b>Add</b>.</li></ol></div><div id="androidInstall"><strong>On Richard's Android</strong><p>Open the browser menu and choose <b>Install app</b> or <b>Add to Home screen</b>.</p></div><button class="primary full" type="button" data-close-dialog="installDialog">Got it</button></div></dialog>
   <div class="toast" id="toast" role="status"></div>
   <script src="supabase-2.106.2.js"></script>
   <script src="app.js"></script>
