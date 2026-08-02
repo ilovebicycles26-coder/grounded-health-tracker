@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="auth.css">
   <link rel="stylesheet" href="routines.css">
   <link rel="stylesheet" href="routine-builder.css">
+  <link rel="stylesheet" href="food.css">
 </head>
 <body>
   <div class="auth-gate" id="authGate">
@@ -23,7 +24,7 @@
       <div class="auth-brand"><span class="brand-mark">g.</span><span>grounded</span></div>
       <div id="loginPanel">
         <p class="eyebrow muted">PRIVATE HEALTH SPACE</p><h2>Welcome back.</h2><p class="auth-copy">Sign in to your private shared tracker.</p>
-        <form id="authForm"><label>Email<input name="email" type="email" autocomplete="email" required></label><label>Password<input name="password" type="password" autocomplete="current-password" minlength="8" required></label><button class="primary full" type="submit">Sign in</button></form>
+        <form id="authForm"><label>Email<input name="email" type="email" autocomplete="email" required></label><label>Password<input name="password" type="password" autocomplete="current-password" minlength="8" required></label><label class="stay-signed-in"><input name="staySignedIn" type="checkbox" checked><span>Stay signed in on this device</span></label><button class="primary full" type="submit">Sign in</button></form>
         <button class="auth-switch" id="authSwitch">New here? Create an account</button><p class="auth-status" id="authStatus"></p>
       </div>
       <div id="householdPanel" hidden>
@@ -44,6 +45,7 @@
         <button class="nav-item" data-view="checkin"><span>＋</span>Check-in</button>
         <button class="nav-item" data-view="habits"><span>✓</span>Habits</button>
         <button class="nav-item" data-view="routines"><span>⚡</span>Routines</button>
+        <button class="nav-item" data-view="food"><span>🍽</span>Food diary</button>
       </nav>
       <div class="sidebar-bottom">
         <button class="nav-item" id="signOut"><span>↪</span>Sign out</button>
@@ -110,6 +112,18 @@
         <div class="routine-layout"><div class="routine-picker" id="routinePicker"></div><article class="card routine-detail" id="routineDetail"></article></div>
         <form class="card routine-builder" id="routineBuilder"><div><p class="eyebrow muted">PERSONAL ROUTINE BUILDER</p><h3>Create a routine for Zoe</h3><p>Pick enjoyable activities and Grounded will turn them into a simple repeatable session.</p></div><div class="builder-fields"><label>Who is it for?<input name="owner" value="Zoe" required></label><label>Routine name<input name="name" value="Zoe's feel-good movement" required></label></div><fieldset><legend>Activities she enjoys</legend><label><input type="checkbox" name="activity" value="Hula hooping" checked> Hula hooping</label><label><input type="checkbox" name="activity" value="Walking"> Walking</label><label><input type="checkbox" name="activity" value="Dancing"> Dancing</label><label><input type="checkbox" name="activity" value="Bodyweight strength"> Bodyweight strength</label><label><input type="checkbox" name="activity" value="Resistance-band mobility"> Resistance-band mobility</label></fieldset><label>Another activity<input name="other" placeholder="e.g. gardening, yoga or swimming"></label><button class="primary" type="submit">Create personal routine</button></form>
         <div class="card routine-safety"><strong>Listen to your body</strong><p>Keep movements comfortable and controlled. Reduce the range or stop if pain becomes sharp or clearly worsens. Build time gradually, especially after a flare-up.</p></div>
+      </section>
+
+      <section class="view" id="foodView">
+        <div class="section-intro"><div><p class="eyebrow muted">NOURISH & NOTICE</p><h2>Your food diary,<br><em>without judgement.</em></h2><p>Log what you eat and use the numbers as information, not a score.</p></div></div>
+        <div class="food-summary">
+          <article class="card calorie-card"><small>TODAY</small><strong><span id="todayCalories">0</span> kcal</strong><div class="calorie-bar"><i id="calorieBar"></i></div><p id="calorieRemaining">Set a daily target below</p></article>
+          <form class="card target-card" id="calorieTargetForm"><label>Personal daily target<input name="target" type="number" min="800" max="6000" step="50" placeholder="e.g. 2000"></label><button class="secondary" type="submit">Save target</button></form>
+        </div>
+        <div class="food-layout">
+          <form class="card food-form" id="foodForm"><h3>Add food</h3><label>Date<input name="date" type="date" required></label><label>Meal<select name="meal"><option>Breakfast</option><option>Lunch</option><option>Dinner</option><option>Snack</option><option>Drink</option></select></label><label>Food or drink<input name="name" maxlength="80" placeholder="e.g. porridge with banana" required></label><label>Calories<input name="calories" type="number" min="0" max="10000" placeholder="kcal" required></label><button class="primary" type="submit">Add to diary</button></form>
+          <article class="card food-history-card"><div class="card-head"><h3>Recent diary</h3><span id="foodEntryCount"></span></div><div id="foodHistory" class="food-history"></div></article>
+        </div>
       </section>
 
       <section class="view" id="settingsView">
