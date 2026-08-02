@@ -1,6 +1,6 @@
-.auth-gate{position:fixed;inset:0;z-index:100;background:linear-gradient(135deg,#12352f 0 45%,#dcebdd 45% 100%);display:grid;place-items:center;padding:20px}
+.auth-gate{position:fixed;inset:0;z-index:100;background:linear-gradient(135deg,#12352f 0 45%,#dcebdd 45% 100%);display:grid;place-items:center;padding:20px;overflow:auto}
 .auth-gate[hidden]{display:none}
-.auth-panel{width:min(430px,100%);background:var(--paper);padding:38px;border-radius:22px;box-shadow:0 30px 90px rgba(0,0,0,.28)}
+.auth-panel{width:min(430px,100%);background:var(--paper);padding:38px;border-radius:22px;box-shadow:0 30px 90px rgba(0,0,0,.28);margin:auto}
 .auth-brand{display:flex;align-items:center;gap:10px;font:22px Georgia,serif;margin-bottom:42px}
 .auth-panel h2{font:38px Georgia,serif;margin:12px 0}
 .auth-copy{color:var(--muted);font-size:13px;margin-bottom:25px}

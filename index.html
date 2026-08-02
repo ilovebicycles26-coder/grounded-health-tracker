@@ -109,7 +109,7 @@
   <dialog id="weightDialog"><form method="dialog" id="weightForm"><div class="modal-head"><div><p class="eyebrow muted">CHECK IN</p><h3>Log your weight</h3></div><button value="cancel" aria-label="Close">×</button></div><label>Weight (kg)<div class="weight-input"><input name="weight" type="number" min="30" max="400" step="0.1" required autofocus><span>kg</span></div></label><label>Date<input name="date" type="date" required></label><label>Note <span>Optional</span><textarea name="note" rows="3" placeholder="How did this week feel?"></textarea></label><button class="primary full" value="default">Save weigh-in</button></form></dialog>
   <dialog id="habitDialog"><form method="dialog" id="habitForm"><div class="modal-head"><h3>Add a habit</h3><button value="cancel" aria-label="Close">×</button></div><label>Habit name<input name="name" maxlength="32" required placeholder="e.g. Morning walk"></label><label>Icon<select name="icon"><option>💧</option><option>🚶</option><option>🥗</option><option>😴</option><option>🧘</option><option>🏋️</option></select></label><button class="primary full" value="default">Add habit</button></form></dialog>
   <div class="toast" id="toast" role="status"></div>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-2.106.2.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
