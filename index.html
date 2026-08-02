@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#12352f">
+  <meta name="description" content="A private, personal health and weight-loss tracker.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Grounded">
+  <title>Grounded — Personal Health Tracker</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#overview" aria-label="Grounded home"><span class="brand-mark">g.</span><span>grounded</span></a>
+      <nav aria-label="Main navigation">
+        <button class="nav-item active" data-view="overview"><span>⌂</span>Overview</button>
+        <button class="nav-item" data-view="progress"><span>↗</span>Progress</button>
+        <button class="nav-item" data-view="checkin"><span>＋</span>Check-in</button>
+        <button class="nav-item" data-view="habits"><span>✓</span>Habits</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <button class="nav-item" data-view="settings"><span>⚙</span>Settings</button>
+        <div class="privacy-note"><span>●</span><div><strong>Private by default</strong><small>Your data stays on this device.</small></div></div>
+      </div>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <button class="mobile-menu" aria-label="Open menu">☰</button>
+        <div><p class="eyebrow" id="todayLabel"></p><h1 id="pageTitle">Overview</h1></div>
+        <div style="display:flex;gap:8px"><button class="secondary" id="installApp" hidden>Install app</button><button class="primary" id="quickLog">＋ Log weight</button></div>
+      </header>
+
+      <section class="view active" id="overviewView">
+        <div class="hero card">
+          <div class="hero-copy"><p class="eyebrow muted">YOUR JOURNEY</p><h2>Small choices.<br><em>Lasting change.</em></h2><p id="heroMessage">Add your first weight to begin your journey toward 90 kg.</p><button class="text-button" data-go="checkin">Make today count <span>→</span></button></div>
+          <div class="goal-ring" id="goalRing"><div><strong id="ringValue">—</strong><span>progress</span></div></div>
+        </div>
+
+        <div class="stat-grid">
+          <article class="stat card"><span class="stat-icon mint">↘</span><div><small>CURRENT WEIGHT</small><strong id="currentWeight">—</strong><p id="weightDelta">Log a weigh-in</p></div></article>
+          <article class="stat card"><span class="stat-icon sand">◎</span><div><small>GOAL WEIGHT</small><strong id="goalWeight">90.0 <i>kg</i></strong><p id="toGo">Set your starting weight</p></div></article>
+          <article class="stat card"><span class="stat-icon lilac">✦</span><div><small>CONSISTENCY</small><strong id="streakValue">0 <i>days</i></strong><p>Current check-in streak</p></div></article>
+        </div>
+
+        <div class="dashboard-grid">
+          <article class="card chart-card"><div class="card-head"><div><p class="eyebrow muted">WEIGHT TREND</p><h3>Your progress</h3></div><button class="ghost" data-go="progress">View all →</button></div><div class="chart-wrap"><svg id="weightChart" role="img" aria-label="Weight trend chart" viewBox="0 0 760 260"></svg><div class="chart-empty" id="chartEmpty">Your trend will appear after two weigh-ins.</div></div></article>
+          <article class="card today-card"><div class="card-head"><div><p class="eyebrow muted">TODAY</p><h3>Daily rhythm</h3></div><span class="score" id="dailyScore">0/4</span></div><div id="todayHabits" class="today-habits"></div><button class="secondary full" data-go="habits">Manage habits</button></article>
+        </div>
+
+        <div class="card reflection"><div><span class="quote-mark">“</span><p id="reflectionText">Progress isn’t a straight line. Showing up is the win.</p></div><button class="ghost" id="newReflection">New thought ↻</button></div>
+      </section>
+
+      <section class="view" id="progressView">
+        <div class="section-intro"><div><p class="eyebrow muted">THE LONG VIEW</p><h2>See the trend,<br><em>not the noise.</em></h2></div><button class="primary" data-open="weight">＋ Add weigh-in</button></div>
+        <article class="card large-chart"><div class="card-head"><h3>Weight history</h3><div class="range-picker"><button data-range="30">30D</button><button data-range="90" class="active">90D</button><button data-range="all">ALL</button></div></div><svg id="largeChart" viewBox="0 0 1000 360"></svg></article>
+        <div class="progress-grid"><article class="card"><div class="card-head"><h3>Milestones</h3><span>Goal <b id="milestoneGoal">90 kg</b></span></div><div id="milestones" class="milestones"></div></article><article class="card"><div class="card-head"><h3>Recent entries</h3><button class="ghost" id="exportCsv">Export CSV</button></div><div id="weightHistory" class="history"></div></article></div>
+      </section>
+
+      <section class="view" id="checkinView">
+        <div class="section-intro"><div><p class="eyebrow muted">A MOMENT FOR YOU</p><h2>How are you,<br><em>really?</em></h2><p>A quick check-in helps you notice what supports your progress.</p></div></div>
+        <form class="card checkin-form" id="checkinForm">
+          <div class="form-section"><label>How do you feel today?</label><div class="mood-row"><button type="button" data-mood="1">😞<span>Low</span></button><button type="button" data-mood="2">😕<span>Flat</span></button><button type="button" data-mood="3">😌<span>Okay</span></button><button type="button" data-mood="4">🙂<span>Good</span></button><button type="button" data-mood="5">🤩<span>Great</span></button></div></div>
+          <div class="slider-grid"><label>Energy <output id="energyOut">3 / 5</output><input name="energy" type="range" min="1" max="5" value="3"></label><label>Sleep <output id="sleepOut">3 / 5</output><input name="sleep" type="range" min="1" max="5" value="3"></label></div>
+          <label>What’s on your mind? <span>Optional</span><textarea name="note" rows="4" placeholder="A win, a challenge, or something you noticed..."></textarea></label>
+          <button class="primary" type="submit">Save today’s check-in</button><p class="form-status" id="checkinStatus"></p>
+        </form>
+      </section>
+
+      <section class="view" id="habitsView">
+        <div class="section-intro"><div><p class="eyebrow muted">BUILD YOUR FOUNDATION</p><h2>Gentle habits,<br><em>done often.</em></h2></div><button class="primary" id="addHabit">＋ Add habit</button></div>
+        <div class="habit-layout"><div class="card"><div class="week-head" id="weekHead"></div><div id="habitTracker"></div></div><aside class="card insight"><p class="eyebrow muted">THIS WEEK</p><strong id="weekPercent">0%</strong><p>of your habits completed</p><div class="mini-bar"><i id="weekBar"></i></div><small>Consistency beats perfection. Keep the promises that help you feel your best.</small></aside></div>
+      </section>
+
+      <section class="view" id="settingsView">
+        <div class="section-intro"><div><p class="eyebrow muted">MAKE IT YOURS</p><h2>Your health,<br><em>your terms.</em></h2></div></div>
+        <form class="card settings-form" id="settingsForm"><h3>Profile & goal</h3><div class="field-grid"><label>Your name<input name="name" placeholder="Your name"></label><label>Goal weight (kg)<input name="goal" type="number" min="30" max="300" step="0.1" value="90"></label><label>Starting weight (kg)<input name="start" type="number" min="30" max="400" step="0.1" placeholder="e.g. 112"></label><label>Height (cm)<input name="height" type="number" min="100" max="250" placeholder="Optional"></label></div><button class="primary" type="submit">Save changes</button></form>
+        <div class="card data-card"><div><h3>Your data</h3><p>Download a complete backup or restore one on this device.</p></div><div class="data-actions"><button class="secondary" id="backupData">Download backup</button><label class="secondary file-label">Restore backup<input id="restoreData" type="file" accept="application/json"></label><button class="danger" id="clearData">Clear all data</button></div></div>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="weightDialog"><form method="dialog" id="weightForm"><div class="modal-head"><div><p class="eyebrow muted">CHECK IN</p><h3>Log your weight</h3></div><button value="cancel" aria-label="Close">×</button></div><label>Weight (kg)<div class="weight-input"><input name="weight" type="number" min="30" max="400" step="0.1" required autofocus><span>kg</span></div></label><label>Date<input name="date" type="date" required></label><label>Note <span>Optional</span><textarea name="note" rows="3" placeholder="How did this week feel?"></textarea></label><button class="primary full" value="default">Save weigh-in</button></form></dialog>
+  <dialog id="habitDialog"><form method="dialog" id="habitForm"><div class="modal-head"><h3>Add a habit</h3><button value="cancel" aria-label="Close">×</button></div><label>Habit name<input name="name" maxlength="32" required placeholder="e.g. Morning walk"></label><label>Icon<select name="icon"><option>💧</option><option>🚶</option><option>🥗</option><option>😴</option><option>🧘</option><option>🏋️</option></select></label><button class="primary full" value="default">Add habit</button></form></dialog>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>
