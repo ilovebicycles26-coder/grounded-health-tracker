@@ -33,7 +33,7 @@
     "@grounded/weight-local": "workspace:*",
     "@hookform/resolvers": "5.7.1",
     "dexie": "4.4.4",
-    "react": "19.2.3",
+    "react": "19.2.8",
     "react-dom": "19.2.3",
     "react-hook-form": "7.84.0",
     "react-router-dom": "7.18.2",
