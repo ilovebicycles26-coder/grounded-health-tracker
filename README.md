@@ -1,14 +1,14 @@
-# Grounded commercial product
+# Grounded personal health tracker
 
-Grounded is a privacy-first, multi-platform personal health product for separate personal accounts and explicitly invited partners.
+Grounded is Richard and Zoe's private-use, multi-platform health tracker. It supports separate personal accounts and explicit, revocable partner sharing.
 
-The existing GitHub Pages application remains a separate live prototype. This repository contains the production-oriented replacement and does not mutate prototype records.
+The GitHub Pages address is publicly reachable because that is how GitHub Pages works on this repository, but the application and database are allowlisted to Richard and Zoe's two existing accounts. Opening the sign-in screen does not grant access to health data.
 
 ## Current phase
 
 Milestones 0–14 are implemented and verified. The installable responsive PWA includes the dashboard, weight tracking toward 90 kg, nutrition/calories, editable exercise routines, supplements and other habits, private wellbeing, partner invitations with revocable sharing, reminders, achievements, reports, and safe backup/import preview. It is designed for Android and iPhone home-screen installation.
 
-Milestone 15 migration execution and Milestone 16 external assurance are deliberately gated. No personal prototype records move until an isolated staging project, dry-run reconciliation, and Richard/Zoe opt-in exist. See the commercial-readiness and migration runbooks for the exact boundary.
+The personal-access migration is live. Public registration has been removed from the application, and restrictive database policies deny non-allowlisted accounts across both the current application and the original prototype schema.
 
 ## Development
 
