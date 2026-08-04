@@ -1,0 +1,19 @@
+{
+  "name": "@grounded/habits-local",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@grounded/application": "workspace:*",
+    "@grounded/domain": "workspace:*",
+    "@grounded/habits": "workspace:*",
+    "@grounded/local-store": "workspace:*"
+  }
+}

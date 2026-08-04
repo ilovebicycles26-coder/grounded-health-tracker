@@ -1,0 +1,9 @@
+export default {
+  arrowParens: 'always',
+  bracketSpacing: true,
+  endOfLine: 'lf',
+  printWidth: 100,
+  semi: true,
+  singleQuote: true,
+  trailingComma: 'all',
+};

@@ -1,0 +1,31 @@
+{
+  "name": "@grounded/mobile",
+  "version": "0.1.0",
+  "private": true,
+  "main": "expo-router/entry",
+  "scripts": {
+    "build": "node ../../tooling/run-expo.mjs export --platform ios --output-dir dist",
+    "dev": "node ../../tooling/run-expo.mjs start",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@grounded/auth": "workspace:*",
+    "@grounded/domain": "workspace:*",
+    "@grounded/local-store": "workspace:*",
+    "@grounded/settings": "workspace:*",
+    "@grounded/supabase": "workspace:*",
+    "@grounded/sync": "workspace:*",
+    "@grounded/ui": "workspace:*",
+    "expo": "57.0.9",
+    "expo-router": "57.0.9",
+    "expo-secure-store": "57.0.1",
+    "expo-sqlite": "57.0.1",
+    "expo-status-bar": "57.0.1",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-native": "0.86.2",
+    "react-native-safe-area-context": "5.7.0",
+    "react-native-screens": "4.26.2",
+    "react-native-worklets": "0.10.1"
+  }
+}
