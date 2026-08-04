@@ -8,7 +8,7 @@ export function AuthLayout() {
           <span aria-hidden="true">g.</span> grounded
         </Link>
         <Outlet />
-        <p className="auth-privacy">Your health information is private to your account.</p>
+        <p className="auth-privacy">Personal access is limited to Richard and Zoe.</p>
       </section>
       <aside className="auth-art" aria-hidden="true">
         <p>

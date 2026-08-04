@@ -1,5 +1,6 @@
 import {
   SupabaseAuthService,
+  SupabasePersonalAccessService,
   SupabaseProfileRepository,
   createGroundedSupabaseClient,
 } from '@grounded/supabase';
@@ -26,6 +27,9 @@ export const supabaseClient = configuration.supabase
     )
   : null;
 export const authService = supabaseClient ? new SupabaseAuthService(supabaseClient) : null;
+export const personalAccessService = supabaseClient
+  ? new SupabasePersonalAccessService(supabaseClient)
+  : null;
 export const profileRepository = supabaseClient
   ? new SupabaseProfileRepository(supabaseClient)
   : null;

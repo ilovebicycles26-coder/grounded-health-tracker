@@ -8,6 +8,7 @@ export type AuthErrorCode =
   | 'network_error'
   | 'not_authenticated'
   | 'configuration_error'
+  | 'access_denied'
   | 'unknown';
 
 export interface AuthError {
@@ -49,6 +50,10 @@ export interface AuthService {
   requestPasswordReset(input: PasswordResetInput): Promise<Result<void>>;
   updatePassword(password: string): Promise<Result<void>>;
   subscribe(listener: (event: AuthEvent, session: AuthSession | null) => void): () => void;
+}
+
+export interface PersonalAccessService {
+  hasAccess(): Promise<Result<boolean>>;
 }
 
 export interface Profile {

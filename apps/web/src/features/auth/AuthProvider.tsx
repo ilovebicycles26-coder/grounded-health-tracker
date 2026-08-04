@@ -8,10 +8,16 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { authService, browserAuthStorage, profileRepository } from './runtime';
+import {
+  authService,
+  browserAuthStorage,
+  personalAccessService,
+  profileRepository,
+} from './runtime';
 
 interface AuthContextValue {
-  readonly status: 'loading' | 'anonymous' | 'authenticated' | 'configuration_error' | 'error';
+  readonly status:
+    'loading' | 'anonymous' | 'authenticated' | 'unauthorized' | 'configuration_error' | 'error';
   readonly session: AuthSession | null;
   readonly profile: Profile | null;
   readonly error: AuthError | null;
@@ -33,17 +39,37 @@ export function AuthProvider({ children }: { readonly children: ReactNode }) {
     browserAuthStorage.getPersistence() === 'durable',
   );
   const applySession = useCallback(async (next: AuthSession | null): Promise<void> => {
-    setSession(next);
     setError(null);
     if (!next) {
+      setSession(null);
       setProfile(null);
       setStatus('anonymous');
       return;
     }
-    if (!profileRepository) {
+    if (!profileRepository || !personalAccessService) {
       setStatus('configuration_error');
       return;
     }
+    const access = await personalAccessService.hasAccess();
+    if (!access.ok) {
+      setSession(null);
+      setProfile(null);
+      setError(access.error);
+      setStatus('error');
+      return;
+    }
+    if (!access.value) {
+      await authService?.signOut();
+      setSession(null);
+      setProfile(null);
+      setError({
+        code: 'access_denied',
+        message: 'This personal Grounded app is limited to Richard and Zoe.',
+      });
+      setStatus('unauthorized');
+      return;
+    }
+    setSession(next);
     const result = await profileRepository.ensureForUser(next.user.id);
     if (!result.ok) {
       setError(result.error);

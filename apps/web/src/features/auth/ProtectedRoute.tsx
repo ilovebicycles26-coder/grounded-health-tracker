@@ -21,6 +21,10 @@ export function ProtectedRoute() {
         {auth.error?.message ?? 'Your account could not be loaded.'}
       </p>
     );
+  if (auth.status === 'unauthorized')
+    return (
+      <Navigate replace state={{ accessDenied: true, from: location.pathname }} to="/sign-in" />
+    );
   if (auth.status === 'anonymous')
     return <Navigate replace state={{ from: location.pathname }} to="/sign-in" />;
   return <Outlet />;

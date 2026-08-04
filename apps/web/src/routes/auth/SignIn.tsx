@@ -9,7 +9,8 @@ export function SignIn() {
   const location = useLocation();
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const destination = (location.state as { from?: string } | null)?.from ?? '/today';
+  const routeState = location.state as { accessDenied?: boolean; from?: string } | null;
+  const destination = routeState?.from ?? '/today';
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!authService) {
@@ -33,6 +34,11 @@ export function SignIn() {
       <p className="eyebrow">WELCOME BACK</p>
       <h1 id="auth-title">Sign in to Grounded</h1>
       <p className="lede">Continue building health habits that fit real life.</p>
+      {routeState?.accessDenied ? (
+        <p className="form-error" role="alert">
+          This personal Grounded app is limited to Richard and Zoe.
+        </p>
+      ) : null}
       <form className="auth-form" onSubmit={(event) => void submit(event)}>
         <label htmlFor="email">Email address</label>
         <input autoComplete="email" id="email" name="email" required type="email" />
@@ -64,9 +70,7 @@ export function SignIn() {
           {pending ? 'Signing in…' : 'Sign in'}
         </button>
       </form>
-      <p className="auth-switch">
-        New to Grounded? <Link to="/sign-up">Create an account</Link>
-      </p>
+      <p className="auth-switch">This is a private personal app. New accounts are closed.</p>
     </>
   );
 }

@@ -262,3 +262,14 @@ Status: Internal engineering baseline complete; external assurance outstanding.
 ## Milestone 17 — Desktop
 
 Status: Deliberately deferred until stable web release. The PWA can already be installed on supported desktop browsers; Tauri packaging would add release risk before providing a validated need.
+
+## Personal-use scope
+
+Status: In implementation.
+
+- [x] Product direction changed from possible commercial release to personal use by Richard and Zoe only.
+- [x] Public self-registration removed from web routing and sign-in UI.
+- [x] Database allowlist and restrictive RLS boundary designed for exactly the two existing accounts.
+- [x] Client access check added before profile bootstrap or account-scoped local storage is opened.
+- [x] Applied and verified the personal-access migration in the live Supabase project.
+- [ ] Keep source control private and select a personal deployment path.

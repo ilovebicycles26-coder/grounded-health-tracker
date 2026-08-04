@@ -13,5 +13,6 @@ Accepted for Milestone 1:
 - ADR-009 — Revisioned feature-owned health records.
 
 - ADR-010 — Versioned routine aggregate.
+- ADR-011 — Two-person personal access.
 
 An ADR is immutable after acceptance. A later decision supersedes it with a new ADR.

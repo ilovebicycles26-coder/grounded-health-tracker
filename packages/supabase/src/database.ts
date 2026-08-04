@@ -550,6 +550,7 @@ export interface Database {
     };
     Views: Record<never, never>;
     Functions: {
+      has_personal_access: { Args: Record<PropertyKey, never>; Returns: boolean };
       create_partner_invite: { Args: Record<PropertyKey, never>; Returns: string };
       accept_partner_invite: { Args: { invite_code: string }; Returns: string };
       list_my_partners: {

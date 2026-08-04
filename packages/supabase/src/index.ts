@@ -3,6 +3,7 @@ import type {
   AuthEvent,
   AuthService,
   AuthSession,
+  PersonalAccessService,
   Profile,
   ProfileRepository,
   ProfileUpdate,
@@ -125,6 +126,16 @@ export class SupabaseAuthService implements AuthService {
       if (mappedEvent) listener(mappedEvent, session ? mapSession(session) : null);
     });
     return () => data.subscription.unsubscribe();
+  }
+}
+
+export class SupabasePersonalAccessService implements PersonalAccessService {
+  public constructor(private readonly client: GroundedSupabaseClient) {}
+
+  public async hasAccess(): Promise<Result<boolean>> {
+    const { data, error } = await this.client.rpc('has_personal_access');
+    if (error) return failure(error);
+    return { ok: true, value: data === true };
   }
 }
 

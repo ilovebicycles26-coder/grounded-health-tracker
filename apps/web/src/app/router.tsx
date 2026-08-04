@@ -6,7 +6,6 @@ import { ConfirmEmail } from '../routes/auth/ConfirmEmail';
 import { ForgotPassword } from '../routes/auth/ForgotPassword';
 import { ResetPassword } from '../routes/auth/ResetPassword';
 import { SignIn } from '../routes/auth/SignIn';
-import { SignUp } from '../routes/auth/SignUp';
 import { AppShell } from './shell/AppShell';
 import { RouteError } from './shell/RouteError';
 
@@ -19,7 +18,6 @@ export const router = createBrowserRouter(
       errorElement: <RouteError />,
       children: [
         { path: '/sign-in', element: <SignIn /> },
-        { path: '/sign-up', element: <SignUp /> },
         { path: '/confirm-email', element: <ConfirmEmail /> },
         { path: '/forgot-password', element: <ForgotPassword /> },
         { path: '/reset-password', element: <ResetPassword /> },

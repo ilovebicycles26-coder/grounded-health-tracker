@@ -7,6 +7,7 @@ import { describe, expect, it, vi } from 'vitest';
 import {
   type GroundedSupabaseClient,
   SupabaseAuthService,
+  SupabasePersonalAccessService,
   SupabaseProfileRepository,
   SupabaseWeightSyncTransport,
 } from './index';
@@ -52,6 +53,20 @@ describe('SupabaseAuthService', () => {
         message: 'The email or password is not correct.',
       },
     });
+  });
+});
+
+describe('SupabasePersonalAccessService', () => {
+  it('continues only when the database allowlist approves the caller', async () => {
+    const rpc = vi.fn(() => Promise.resolve({ data: true, error: null }));
+    const client = {
+      rpc,
+    } as unknown as GroundedSupabaseClient;
+
+    const result = await new SupabasePersonalAccessService(client).hasAccess();
+
+    expect(rpc).toHaveBeenCalledWith('has_personal_access');
+    expect(result).toEqual({ ok: true, value: true });
   });
 });
 
