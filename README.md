@@ -1,32 +1,38 @@
-# Grounded
+# Grounded personal health tracker
 
-A private, local-first personal health tracker focused on sustainable weight loss toward a configurable goal (90 kg by default).
+Grounded is Richard and Zoe's private-use, multi-platform health tracker. It supports separate personal accounts and explicit, revocable partner sharing.
 
-## Run
+The GitHub Pages address is publicly reachable because that is how GitHub Pages works on this repository, but the application and database are allowlisted to Richard and Zoe's two existing accounts. Opening the sign-in screen does not grant access to health data.
 
-Open `index.html` directly in a modern browser, or serve this folder locally:
+## Current phase
 
-```powershell
-python -m http.server 4173
+Milestones 0–14 are implemented and verified. The installable responsive PWA includes the dashboard, weight tracking toward 90 kg, nutrition/calories, editable exercise routines, supplements and other habits, private wellbeing, partner invitations with revocable sharing, reminders, achievements, reports, and safe backup/import preview. It is designed for Android and iPhone home-screen installation.
+
+The personal-access migration is live. Public registration has been removed from the application, and restrictive database policies deny non-allowlisted accounts across both the current application and the original prototype schema.
+
+## Development
+
+```bash
+pnpm install --frozen-lockfile
+pnpm check
+pnpm dev:web
+pnpm dev:mobile
 ```
 
-Then visit `http://localhost:4173`.
+`pnpm check` runs formatting verification, architecture boundaries, ESLint, strict TypeScript, tests, and production builds for every workspace.
 
-All data is stored in browser `localStorage`. Use Settings → Download backup regularly if the data matters to you.
+## Documents
 
-## Install on a phone
+- `docs/PRODUCT_REQUIREMENTS.md`
+- `docs/DATA_MAP_AND_RETENTION.md`
+- `docs/THREAT_MODEL.md`
+- `docs/ACCESSIBILITY_STANDARD.md`
+- `docs/ANALYTICS_POLICY.md`
+- `docs/PROTOTYPE_MIGRATION_INVENTORY.md`
+- `docs/MILESTONE_STATUS.md`
+- `docs/QUALITY_REPORT.md`
+- `docs/COMMERCIAL_READINESS.md`
+- `docs/runbooks/DEPLOYMENT_AND_MOBILE.md`
+- `docs/runbooks/PROTOTYPE_BETA_MIGRATION.md`
 
-After deployment to an HTTPS host, Android users can open the URL in Chrome and tap **Install app**. On iPhone, open the URL in Safari, tap **Share**, then **Add to Home Screen**. The installed app works offline.
-
-The same link can be shared with Zoe. Data is separate on each device and is not sent to a server.
-
-## Included
-
-- Weight logs, trend charts, milestones, notes, and CSV export
-- Daily mood, energy, sleep, and reflection check-ins
-- Editable weekly habit tracker
-- Configurable profile, starting weight, and goal weight
-- Local JSON backup and restore
-- Responsive desktop and mobile design
-
-This is a wellbeing tracker, not a medical device. For personalised health or weight-loss advice, consult a qualified healthcare professional.
+The governing architecture and roadmap are recorded in `GROUNDED_PRODUCT_BLUEPRINT.md`.

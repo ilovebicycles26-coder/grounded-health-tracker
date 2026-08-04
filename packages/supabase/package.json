@@ -1,0 +1,25 @@
+{
+  "name": "@grounded/supabase",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@grounded/auth": "workspace:*",
+    "@grounded/domain": "workspace:*",
+    "@grounded/exercise": "workspace:*",
+    "@grounded/habits": "workspace:*",
+    "@grounded/local-store": "workspace:*",
+    "@grounded/nutrition": "workspace:*",
+    "@grounded/sharing": "workspace:*",
+    "@grounded/sync": "workspace:*",
+    "@grounded/weight": "workspace:*",
+    "@supabase/supabase-js": "2.111.0"
+  }
+}

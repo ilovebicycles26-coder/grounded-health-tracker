@@ -1,0 +1,8 @@
+dist
+.expo
+.expo-user
+node_modules
+.pnpm-store
+.turbo
+coverage
+pnpm-lock.yaml

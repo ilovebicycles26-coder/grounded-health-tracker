@@ -1,1 +1,0 @@
-{"name":"Grounded — Personal Health Tracker","short_name":"Grounded","description":"A private, personal health and weight-loss tracker.","start_url":"./index.html","scope":"./","display":"standalone","background_color":"#f3f0e8","theme_color":"#12352f","orientation":"portrait-primary","icons":[{"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]}

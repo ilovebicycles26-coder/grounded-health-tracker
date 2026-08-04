@@ -1,0 +1,21 @@
+{
+  "expo": {
+    "name": "Grounded",
+    "slug": "grounded",
+    "scheme": "grounded",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "plugins": ["expo-router", "expo-secure-store"],
+    "ios": {
+      "bundleIdentifier": "health.grounded.app",
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "health.grounded.app"
+    },
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
