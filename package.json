@@ -20,21 +20,21 @@
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
-    "@testing-library/jest-dom": "6.9.1",
+    "@testing-library/jest-dom": "7.0.0",
     "@testing-library/react": "16.3.2",
-    "@types/node": "26.1.2",
+    "@types/node": "26.2.0",
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.4",
-    "eslint": "10.0.1",
+    "eslint": "10.8.1",
     "eslint-plugin-react-hooks": "7.1.1",
     "fake-indexeddb": "6.2.5",
     "jsdom": "30.0.1",
     "prettier": "3.9.6",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "turbo": "2.10.8",
-    "typescript": "5.9.3",
-    "typescript-eslint": "8.65.0",
+    "turbo": "2.10.9",
+    "typescript": "7.0.2",
+    "typescript-eslint": "8.66.0",
     "vitest": "4.1.10"
   }
 }
